@@ -1,0 +1,25 @@
+DROP DATABASE IF EXISTS treehousedb;
+CREATE DATABASE treehousedb;
+USE treehousedb;
+
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE books (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	google_book_id VARCHAR(100),
+	title VARCHAR(255),
+	authors TEXT,
+	description TEXT,
+	user_id INT NOT NULL,
+
+	CONSTRAINT fk_books_users
+	FOREIGN KEY(user_id)
+	REFERENCES users(id)
+	ON DELETE CASCADE
+);
