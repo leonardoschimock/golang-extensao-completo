@@ -26,7 +26,6 @@ func (b BooksRepo) Create(book models.Book) error {
 	)
 	VALUES (?,?,?,?,?)
 	`
-
 	_, err := b.db.Exec(
 		query,
 		book.GoogleBookID,
@@ -35,12 +34,10 @@ func (b BooksRepo) Create(book models.Book) error {
 		book.Description,
 		book.UserID,
 	)
-
 	return err
 }
 
 func (b BooksRepo) FetchByUser(userID int) ([]models.Book, error) {
-
 	rows, err := b.db.Query(
 		"SELECT * FROM books WHERE user_id=?",
 		userID,
@@ -49,15 +46,10 @@ func (b BooksRepo) FetchByUser(userID int) ([]models.Book, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer rows.Close()
-
 	var books []models.Book
-
 	for rows.Next() {
-
 		var book models.Book
-
 		err = rows.Scan(
 			&book.ID,
 			&book.GoogleBookID,
@@ -66,29 +58,23 @@ func (b BooksRepo) FetchByUser(userID int) ([]models.Book, error) {
 			&book.Description,
 			&book.UserID,
 		)
-
 		if err != nil {
 			return nil, err
 		}
-
 		books = append(books, book)
 	}
-
 	return books, nil
 }
 
 func (b BooksRepo) Delete(id int) error {
-
 	_, err := b.db.Exec(
 		"DELETE FROM books WHERE id=?",
 		id,
 	)
-
 	return err
 }
 
 func (b BooksRepo) Update(book models.Book) error {
-
 	query := `
 	UPDATE books
 	SET
@@ -97,7 +83,6 @@ func (b BooksRepo) Update(book models.Book) error {
 		description=?
 	WHERE id=?
 	`
-
 	_, err := b.db.Exec(
 		query,
 		book.Title,
@@ -105,6 +90,5 @@ func (b BooksRepo) Update(book models.Book) error {
 		book.Description,
 		book.ID,
 	)
-
 	return err
 }

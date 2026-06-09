@@ -21,17 +21,12 @@ func LoadEnv() {
 	if !ok {
 		log.Fatal("Não foi possível obter o caminho do arquivo de config")
 	}
-
 	configDir := filepath.Dir(filePath)
-
 	envPath := filepath.Join(configDir, ".env")
-
 	if err := godotenv.Load(envPath); err != nil {
 		log.Fatalf("Erro ao carregar .env em %s: %s", envPath, err)
 	}
-
 	log.Println("Sucesso em carregar o .env de:", envPath)
-
 	Port = os.Getenv("API_PORT")
 	Cfg = mysql.Config{
 		User:   os.Getenv("DB_USER"),
@@ -40,6 +35,5 @@ func LoadEnv() {
 		Addr:   os.Getenv("DB_ADDR"),
 		DBName: os.Getenv("DB_DATABASE"),
 	}
-
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }

@@ -40,9 +40,7 @@ func (u UsersRepo) Create(user models.Users) (int8, error) {
 }
 
 func (u UsersRepo) FetchByEmail(email string) (models.Users, error) {
-
 	var user models.Users
-
 	query := `
 	SELECT
 		id,
@@ -51,7 +49,6 @@ func (u UsersRepo) FetchByEmail(email string) (models.Users, error) {
 	FROM users
 	WHERE email = ?
 	`
-
 	err := u.db.QueryRow(
 		query,
 		email,
@@ -60,6 +57,5 @@ func (u UsersRepo) FetchByEmail(email string) (models.Users, error) {
 		&user.Email,
 		&user.Password,
 	)
-
 	return user, err
 }
